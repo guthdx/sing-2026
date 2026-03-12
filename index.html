@@ -110,11 +110,12 @@
       text-decoration: none;
     }
     .nav-logo img {
-      height: 40px;
+      height: 44px;
       width: auto;
       transition: height 0.4s ease;
+      filter: drop-shadow(0 1px 6px rgba(255,255,255,0.06));
     }
-    .nav.scrolled .nav-logo img { height: 32px; }
+    .nav.scrolled .nav-logo img { height: 36px; }
     .nav-logo span {
       font-family: var(--font-display);
       font-weight: 700;
@@ -262,12 +263,38 @@
       padding: clamp(6rem, 12vw, 9rem) clamp(1.5rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
       max-width: 56rem;
     }
-    .hero-logo {
-      width: clamp(90px, 12vw, 130px);
-      height: auto;
+    .hero-logo-wrap {
+      position: relative;
+      display: inline-block;
       margin-bottom: 1.5rem;
-      filter: drop-shadow(0 4px 24px rgba(0,0,0,0.3));
       animation: hero-logo-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+    }
+    /* Soft luminous halo behind the logo */
+    .hero-logo-wrap::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 115%;
+      height: 115%;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(240, 235, 224, 0.18) 0%,
+        rgba(240, 235, 224, 0.10) 35%,
+        rgba(240, 235, 224, 0.03) 65%,
+        transparent 100%
+      );
+      filter: blur(8px);
+      pointer-events: none;
+    }
+    .hero-logo {
+      position: relative;
+      width: clamp(130px, 16vw, 190px);
+      height: auto;
+      filter: drop-shadow(0 2px 12px rgba(255,255,255,0.08))
+              drop-shadow(0 4px 24px rgba(0,0,0,0.2));
     }
     @keyframes hero-logo-in {
       from { opacity: 0; transform: scale(0.85) translateY(1rem); }
@@ -928,7 +955,9 @@
     <div class="hero-bg"></div>
     <div class="hero-dna-lines"></div>
     <div class="hero-content">
-      <img src="assets/sing-logo-transparent.png" alt="SING — Summer Internship for INdigenous Peoples in Genomics" class="hero-logo">
+      <div class="hero-logo-wrap">
+        <img src="assets/sing-logo-transparent.png" alt="SING — Summer Internship for INdigenous Peoples in Genomics" class="hero-logo">
+      </div>
       <div class="wheel-bar">
         <span></span><span></span><span></span><span></span>
       </div>
