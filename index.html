@@ -288,10 +288,23 @@
       );
       filter: blur(10px);
       pointer-events: none;
+      z-index: 0;
+    }
+    /* Recolored SING text — filtered copy of the logo clipped to just the text region */
+    .hero-logo-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('assets/sing-logo-transparent.png') no-repeat center / contain;
+      clip-path: inset(79% 0 0 0);
+      filter: brightness(0) invert(1) opacity(0.88);
+      pointer-events: none;
+      z-index: 2;
     }
     .hero-logo {
       position: relative;
-      width: clamp(130px, 16vw, 190px);
+      z-index: 1;
+      width: clamp(150px, 18vw, 220px);
       height: auto;
       filter: drop-shadow(0 2px 12px rgba(255,255,255,0.08))
               drop-shadow(0 4px 24px rgba(0,0,0,0.2));
