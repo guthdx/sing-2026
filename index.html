@@ -269,24 +269,24 @@
       margin-bottom: 1.5rem;
       animation: hero-logo-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
     }
-    /* Soft luminous halo behind the logo */
+    /* Soft luminous halo behind the emblem only, above the "SING" text */
     .hero-logo-wrap::before {
       content: '';
       position: absolute;
-      top: 50%;
+      top: 35%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 115%;
-      height: 115%;
+      width: 80%;
+      height: 70%;
       border-radius: 50%;
       background: radial-gradient(
         circle,
         rgba(240, 235, 224, 0.18) 0%,
         rgba(240, 235, 224, 0.10) 35%,
-        rgba(240, 235, 224, 0.03) 65%,
+        rgba(240, 235, 224, 0.03) 60%,
         transparent 100%
       );
-      filter: blur(8px);
+      filter: blur(10px);
       pointer-events: none;
     }
     .hero-logo {
