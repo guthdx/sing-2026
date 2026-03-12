@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SING 2026 — Before / After Comparison</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.75rem 2rem;
+      background: #16213e;
+      border-bottom: 1px solid #2a2a4a;
+      flex-shrink: 0;
+    }
+    .toolbar h1 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #c9a84c;
+    }
+    .toolbar .sep {
+      width: 1px;
+      height: 20px;
+      background: #2a2a4a;
+    }
+    .view-btns {
+      display: flex;
+      gap: 0.25rem;
+    }
+    .view-btns button {
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      border: 1px solid #2a2a4a;
+      background: transparent;
+      color: #a0a0b0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .view-btns button:first-child { border-radius: 4px 0 0 4px; }
+    .view-btns button:last-child { border-radius: 0 4px 4px 0; }
+    .view-btns button.active {
+      background: #c9a84c;
+      color: #1a1a2e;
+      border-color: #c9a84c;
+    }
+    .view-btns button:hover:not(.active) {
+      border-color: #c9a84c;
+      color: #c9a84c;
+    }
+    .sync-label {
+      font-size: 0.7rem;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .sync-label input { accent-color: #c9a84c; }
+    .frames {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    .frame-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .frame-col + .frame-col {
+      border-left: 2px solid #c9a84c;
+    }
+    .frame-label {
+      text-align: center;
+      padding: 0.4rem 0;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .frame-col:first-child .frame-label {
+      background: #2d1f1f;
+      color: #e88;
+    }
+    .frame-col:last-child .frame-label {
+      background: #1f2d1f;
+      color: #8e8;
+    }
+    .frame-col iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: white;
+    }
+    /* Single view mode */
+    .frames.single .frame-col { display: none; }
+    .frames.single .frame-col.active { display: flex; }
+    .frames.single .frame-col.active { flex: 1; }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <h1>SING 2026 Review</h1>
+    <div class="sep"></div>
+    <div class="view-btns">
+      <button class="active" data-view="split">Side by Side</button>
+      <button data-view="old">Original Only</button>
+      <button data-view="new">Updated Only</button>
+    </div>
+    <div class="sep"></div>
+    <label class="sync-label">
+      <input type="checkbox" id="syncScroll" checked> Sync scroll
+    </label>
+  </div>
+  <div class="frames" id="frames">
+    <div class="frame-col" id="oldCol">
+      <div class="frame-label">Original</div>
+      <iframe src="index-original.html" id="oldFrame"></iframe>
+    </div>
+    <div class="frame-col" id="newCol">
+      <div class="frame-label">Updated (Rene's edits applied)</div>
+      <iframe src="index.html" id="newFrame"></iframe>
+    </div>
+  </div>
+
+  <script>
+    // View switching
+    const btns = document.querySelectorAll('.view-btns button');
+    const frames = document.getElementById('frames');
+    const oldCol = document.getElementById('oldCol');
+    const newCol = document.getElementById('newCol');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const view = btn.dataset.view;
+        if (view === 'split') {
+          frames.classList.remove('single');
+          oldCol.classList.remove('active');
+          newCol.classList.remove('active');
+        } else {
+          frames.classList.add('single');
+          oldCol.classList.toggle('active', view === 'old');
+          newCol.classList.toggle('active', view === 'new');
+        }
+      });
+    });
+
+    // Synchronized scrolling
+    const oldFrame = document.getElementById('oldFrame');
+    const newFrame = document.getElementById('newFrame');
+    const syncCheck = document.getElementById('syncScroll');
+    let syncing = false;
+
+    function setupSync(sourceFrame, targetFrame) {
+      sourceFrame.addEventListener('load', () => {
+        const sourceDoc = sourceFrame.contentWindow;
+        sourceDoc.addEventListener('scroll', () => {
+          if (!syncCheck.checked || syncing) return;
+          syncing = true;
+          const scrollPct = sourceDoc.scrollY / (sourceDoc.document.documentElement.scrollHeight - sourceDoc.innerHeight);
+          const targetDoc = targetFrame.contentWindow;
+          const targetMax = targetDoc.document.documentElement.scrollHeight - targetDoc.innerHeight;
+          targetDoc.scrollTo({ top: scrollPct * targetMax });
+          requestAnimationFrame(() => { syncing = false; });
+        });
+      });
+    }
+
+    setupSync(oldFrame, newFrame);
+    setupSync(newFrame, oldFrame);
+  </script>
+</body>
+</html>
