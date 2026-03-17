@@ -7,7 +7,7 @@
   <meta name="description" content="Apply by March 13 for the SING 2026 workshop at University of Wisconsin-Madison, July 19-24, 2026. An intensive training in genetics, genomics, and ELSI for Indigenous researchers.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     /* ── Reset & Variables ─────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,7 +35,7 @@
       --text-heading-on-dark: #f5f0e8;
 
       /* Type */
-      --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --font-display: 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif;
       --font-body: 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif;
 
       /* Spacing */
@@ -109,13 +109,28 @@
       gap: 0.75rem;
       text-decoration: none;
     }
-    .nav-logo img {
+    .nav-logo-img-wrap {
+      position: relative;
+      display: inline-block;
       height: 44px;
-      width: auto;
       transition: height 0.4s ease;
+    }
+    .nav-logo-img-wrap img {
+      height: 100%;
+      width: auto;
       filter: drop-shadow(0 1px 6px rgba(255,255,255,0.06));
     }
-    .nav.scrolled .nav-logo img { height: 36px; }
+    /* Recolor just the SING text white — same technique as the hero logo */
+    .nav-logo-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('assets/sing-logo-transparent.png') no-repeat center / contain;
+      clip-path: inset(79% 0 0 0);
+      filter: brightness(0) invert(1) opacity(0.88);
+      pointer-events: none;
+    }
+    .nav.scrolled .nav-logo-img-wrap { height: 36px; }
     .nav-logo span {
       font-family: var(--font-display);
       font-weight: 700;
@@ -946,7 +961,7 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <img src="assets/sing-logo-transparent.png" alt="SING Logo">
+        <span class="nav-logo-img-wrap"><img src="assets/sing-logo-transparent.png" alt="SING Logo"></span>
         <span>SING 2026</span>
       </a>
       <ul class="nav-links" id="navLinks">
@@ -976,7 +991,7 @@
       </div>
       <p class="hero-overline">Summer Internship for INdigenous Peoples in Genomics</p>
       <h1 class="hero-title">SING USA 2026</h1>
-      <p class="hero-subtitle">Genetics, Genomics, and ELSI</p>
+      <p class="hero-subtitle">Genomics, Bioinformatics and<br>Ethical, Legal and Social Implications (ELSI)</p>
       <p class="hero-dates">July 19 &ndash; 24, 2026 &middot; University of Wisconsin&ndash;Madison</p>
       <a href="https://asu.co1.qualtrics.com/jfe/form/SV_aabqvuX1T0MMVsG" target="_blank" rel="noopener" class="hero-cta">Apply Now</a>
     </div>
@@ -1005,7 +1020,7 @@
             <li style="margin-bottom: 0.4rem;">Hands-on bioinformatics &amp; wet lab experiences</li>
             <li>Leadership &amp; outreach training</li>
           </ul>
-          <p>SING 2026 is a collaborative effort between the <strong>University of Wisconsin&ndash;Madison</strong>, <strong>Native BioData Consortium</strong>, <strong>Arizona State University</strong>, and the <strong>Center for Indigenous Science</strong>.</p>
+          <p>SING 2026 is a collaborative effort between the <strong>University of Wisconsin&ndash;Madison</strong>, <strong>Native BioData Consortium</strong>, <strong>Arizona State University</strong>, and the <strong>Center for Indigenous Science at University of Illinois Urbana-Champaign</strong>.</p>
         </div>
       </div>
     </div>
@@ -1051,13 +1066,6 @@
           <p>Indigenous community members, elders, and tribal leaders interested in understanding genomics and its implications for tribal communities and governance.</p>
         </div>
 
-        <div class="elig-card reveal reveal-delay-4">
-          <div class="elig-card-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <h3>Documentation</h3>
-          <p>Applicants should provide evidence of tribal enrollment or certification of tribal status, <em>or</em> a written statement outlining the applicant's Indigenous ancestry.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -1079,27 +1087,25 @@
           <ul class="apply-requirements">
             <li>
               <strong>Background Summary</strong>
-              200-word summary of your education and experiences relevant to the SING workshop.
+              Please share a brief summary (about 200 words; roughly 150&ndash;200 is great) of your academic, professional, or community background and how it connects to this workshop.
             </li>
             <li>
-              <strong>Statement of Purpose</strong>
-              500-word essay explaining your purpose for attending the workshop and how it connects to your goals.
+              <strong>Statement of Interest</strong>
+              Please share a statement (about 500 words; roughly 400&ndash;500 is great) describing why you want to attend SING and what you hope to gain, contribute, or bring back to your community or work.
             </li>
             <li>
-              <strong>CV / R&eacute;sum&eacute;</strong>
-              Current curriculum vitae or r&eacute;sum&eacute; (2 GB file size limit).
-            </li>
-            <li>
-              <strong>Tribal Documentation</strong>
-              Evidence of tribal enrollment/certification <em>or</em> a statement of Indigenous ancestry.
+              <strong>Statement of Indigenous Ancestry</strong>
+              Please describe your Indigenous ancestry and community connection in your own words. Optional: Upload Tribal enrollment or certification (if available). Not required and not used in admission decisions.
+              <br><br>
+              <em>Due to funding and space limits, we prioritize Indigenous applicants. We do not judge or verify identity &mdash; we rely on applicants&rsquo; good-faith representation of their Indigenous community connections.</em>
             </li>
           </ul>
-          <p class="apply-note">We recommend drafting your Background and Purpose statements in a Word document before pasting into the application form, as the form has word count limits.</p>
+          <p class="apply-note">We recommend drafting your Background Summary and Statement of Interest in a Word document before pasting into the application form, as the form has word count limits.</p>
         </div>
 
         <div class="apply-cta-panel reveal reveal-delay-2">
           <h3>Ready to Apply?</h3>
-          <p>Submit your application through our online portal. Prepare your background summary, statement of purpose, and supporting documents before beginning.</p>
+          <p>Submit your application through our online portal. Prepare your background summary, statement of interest, and supporting documents before beginning.</p>
           <a href="https://asu.co1.qualtrics.com/jfe/form/SV_aabqvuX1T0MMVsG" target="_blank" rel="noopener" class="apply-btn">Start Application</a>
           <p class="apply-deadline">Application Deadline: March 13, 2026</p>
         </div>
@@ -1133,7 +1139,7 @@
     <div class="container">
       <div class="reveal">
         <p class="section-overline">SING Leadership</p>
-        <h2 class="section-title">Organizers</h2>
+        <h2 class="section-title">Workshop Organizers</h2>
       </div>
       <div class="organizers-grid">
         <div class="organizer-item reveal reveal-delay-1">
@@ -1153,8 +1159,8 @@
           <div class="organizer-email"><a href="mailto:rene.begay@cuanschutz.edu">rene.begay@cuanschutz.edu</a></div>
         </div>
         <div class="organizer-item reveal reveal-delay-3">
-          <div class="organizer-name">Katherine Hoyt</div>
-          <div class="organizer-email"><a href="mailto:kohoyt@gmail.com">kohoyt@gmail.com</a></div>
+          <div class="organizer-name">Kathryn Hoyt</div>
+          <div class="organizer-email"><a href="mailto:hoyt.k@northeastern.edu">hoyt.k@northeastern.edu</a></div>
         </div>
         <div class="organizer-item reveal reveal-delay-3">
           <div class="organizer-name">Ripan Malhi</div>
