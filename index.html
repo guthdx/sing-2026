@@ -225,36 +225,7 @@
       -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 70%);
     }
 
-    /* Subtle animated DNA-inspired vertical lines */
-    .hero-dna-lines {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      opacity: 0.06;
-      pointer-events: none;
-    }
-    .hero-dna-lines::before,
-    .hero-dna-lines::after {
-      content: '';
-      position: absolute;
-      width: 1px;
-      height: 200%;
-      top: -50%;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 30px,
-        var(--wheel-yellow) 30px,
-        var(--wheel-yellow) 60px
-      );
-      animation: dna-drift 20s linear infinite;
-    }
-    .hero-dna-lines::before { left: 15%; }
-    .hero-dna-lines::after { right: 15%; animation-delay: -10s; animation-direction: reverse; }
-    @keyframes dna-drift {
-      from { transform: translateY(0); }
-      to { transform: translateY(60px); }
-    }
+    /* DNA lines removed — read as artifacts at low opacity */
 
     .hero-content {
       position: relative;
@@ -966,7 +937,6 @@
   <!-- ── Hero ───────────────────────────────── -->
   <section class="hero" id="top">
     <div class="hero-bg"></div>
-    <div class="hero-dna-lines"></div>
     <div class="hero-content">
       <div class="hero-logo-wrap">
         <img src="assets/sing-logo-transparent.png" alt="SING — Summer Internship for INdigenous Peoples in Genomics" class="hero-logo">
