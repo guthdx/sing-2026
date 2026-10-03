@@ -1,4 +1,4 @@
-# Publishes the site to Cloudflare Pages (project: sing-nativebio).
+# Publishes the site to Cloudflare Pages (project: sing-2026, NativeBio account; serves sing.nativebio.net).
 # - Push to main      -> production deploy
 # - Pull request      -> preview deploy, with the preview link posted on the PR
 # Needs repo secret CLOUDFLARE_API_TOKEN (Cloudflare Pages: Edit).
@@ -37,10 +37,10 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ad65b3ec7d1568e6c515bf0a59bd68f3
+          accountId: b1d826806bac881e0959faf9cdcb2c72  # Guthrie@nativebio.org account (owns nativebio.net)
           command: >-
             pages deploy _site
-            --project-name=sing-nativebio
+            --project-name=sing-2026
             --branch=${{ github.head_ref || github.ref_name }}
             --commit-hash=${{ github.sha }}
 
