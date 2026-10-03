@@ -1,0 +1,59 @@
+# Publishes the site to Cloudflare Pages (project: sing-nativebio).
+# - Push to main      -> production deploy
+# - Pull request      -> preview deploy, with the preview link posted on the PR
+# Needs repo secret CLOUDFLARE_API_TOKEN (Cloudflare Pages: Edit).
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  deployments: write
+  pull-requests: write
+
+concurrency:
+  group: pages-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Fork PRs get no secrets; skip them instead of failing.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stage site files
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -R assets _site/
+
+      - name: Deploy
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ad65b3ec7d1568e6c515bf0a59bd68f3
+          command: >-
+            pages deploy _site
+            --project-name=sing-nativebio
+            --branch=${{ github.head_ref || github.ref_name }}
+            --commit-hash=${{ github.sha }}
+
+      - name: Post preview link on the PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Preview of this change: ${process.env.PREVIEW_URL}\n\nCheck it, then click **Merge pull request** to publish.`
+            });
